@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { EntityNotFoundError } = require('../errors/EntityNotFoundError');
+const { EntityNotFoundError } = require('../errors/notFoundError');
 const { BadRequestError } = require('../errors/BadRequestError');
 
 const {
