@@ -1,17 +1,20 @@
-exports.campaginsController = {
-    getCampagins: (req, res) => {
-        res.send('GET /campagins');
-    },
-    getCampaginByID: (req, res) => {
-        res.send('GET /campagins/:campaginId');
-    },
-    addCampagin: (req, res) => {
-        res.send('POST /campagins');
-    },
-    updateCampagin: (req, res) => {
-        res.send('PUT /campagins/:campaginId');
-    },
-    deleteCampagin: (req, res) => {
-        res.send('DELETE /campagins/:campaginId');
+const {fetchCampaigns,} = require('../repositories/campaignsRepository');
+
+
+    const getCampaigns = async (req, res) => {
+    const campaigns = await fetchCampaigns();
+        res.status(200).json(campaigns);
     }
-}
+    const getCampaignByID =(req, res) => {
+        res.send('GET /campaigns/:CampaignId');
+    }
+    const  addCampaign= (req, res) => {
+        res.send('POST /campaigns');
+    }
+    const updateCampaign= (req, res) => {
+        res.send('PUT /campaigns/:CampaignId');
+    }
+    const deleteCampaign = (req, res) => {
+        res.send('DELETE /campaigns/:CampaignId');
+    }
+ exports.campaignsController = {}

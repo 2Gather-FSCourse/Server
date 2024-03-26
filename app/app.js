@@ -7,7 +7,7 @@ const { errorHandler } = require('../middlewares/errorHandler');
 const app = express();
 
 const port = process.env.PORT || 3000;
-const { campaginsRouter } = require('../routers/campaginsRouter');
+const { campaignsRouter } = require('../routers/campaignsRouter');
 const { donationsRouter } = require('../routers/donationsRouter');
 const { usersRouter } = require('../routers/usersRouter');
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
-app.use('/campagins', campaginsRouter);
+app.use('/campaigns', campaignsRouter);
 app.use('/donations', donationsRouter);
 app.use('/users', usersRouter);
 
