@@ -5,7 +5,7 @@ const { CLIENT_ID, CLIENT_SECRET, CLIENT_URL } = require('../constants');
 passport.use(new GoogleStrategy({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    callbackURL: '/auth/google/callback',
+    callbackURL: '/users/google/callback',
     scope: ['profile', 'email'],
 }, (accessToken, refreshToken, profile, callback) => {
      callback(null, profile);

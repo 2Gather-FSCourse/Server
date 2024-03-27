@@ -12,10 +12,6 @@ usersRouter.post('/', usersController.addUser);
 usersRouter.put('/:userId', usersController.updateUser);
 usersRouter.delete('/:userId', usersController.deleteUser);
 
-usersRouter.get('/google/callback', passport.authenticate('google',{
-    successRedirect: CLIENT_URL,
-    failureRedirect: '/login/failed'
-}));
 
 usersRouter.get('/login/failed', (req, res) => {
     res.status(401).json({
@@ -39,7 +35,13 @@ usersRouter.get('/login/success', (req, res) => {
    }
 });
 
+
 usersRouter.get('/google', passport.authenticate('google', ['profile', 'email']));
+
+usersRouter.get('/google/callback', passport.authenticate('google',{
+    successRedirect: CLIENT_URL,
+    failureRedirect: '/login/failed'
+}));
 
 usersRouter.get('/logout', (req, res) => {
    req.logout();

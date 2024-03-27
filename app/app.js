@@ -22,7 +22,9 @@ app.use(passport.session());
 const port = process.env.PORT || 3000;
 const { usersRouter } = require('../routers/usersRouter');
 
-app.use(cors());
+app.use(cors(
+    methods = "GET,POST,PUT,DELETE",
+));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
