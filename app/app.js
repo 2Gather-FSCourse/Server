@@ -1,9 +1,9 @@
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 require('express-async-errors');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const errorHandler  = require('../middlewares/errorHandler');
+const {STRIPE_SECRET_KEY, STRIPE_PUBLIC_KEY} = require('../constants');
 
 const app = express();
 
