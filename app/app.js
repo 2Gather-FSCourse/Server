@@ -1,3 +1,4 @@
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 require('express-async-errors');
 const express = require('express');
 const logger = require('morgan');

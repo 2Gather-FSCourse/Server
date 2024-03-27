@@ -3,8 +3,8 @@ const { donationsController } = require('../controllers/donationsController');
 
 const donationsRouter = new Router();
 
-donationsRouter.get('/', donationsController.getDonations);
-donationsRouter.get('/:donationId', donationsController.getDonationByID);
+donationsRouter.get('/', donationsController.getAllDonations);
+donationsRouter.get('/:donationId', donationsController.getDonationById);
 donationsRouter.post('/', donationsController.addDonation);
 donationsRouter.put('/:donationId', donationsController.updateDonation);
 donationsRouter.delete('/:donationId', donationsController.deleteDonation);
