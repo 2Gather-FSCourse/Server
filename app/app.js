@@ -1,4 +1,3 @@
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 require('express-async-errors');
 const express = require('express');
 const logger = require('morgan');
@@ -8,6 +7,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const passportSetup = require('../middlewares/passport');
 
+const {STRIPE_SECRET_KEY, STRIPE_PUBLIC_KEY} = require('../constants');
 
 const app = express();
 app.use(cookieSession({

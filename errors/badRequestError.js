@@ -5,5 +5,11 @@ class BadRequestError extends Error {
         this.status = 400;
     }
 }
-
-module.exports = { BadRequestError };
+class AlreadyExistsError extends Error {
+    constructor(element) {
+        super(`${element} already exists`);
+        this.name = 'AlreadyExistsError';
+        this.status = 400;
+    }
+}
+module.exports = { BadRequestError, AlreadyExistsError,  };

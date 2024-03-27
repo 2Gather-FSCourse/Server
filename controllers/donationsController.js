@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
-const { NotFoundError, BadRequestError } = require('../errors/errors');
+const {NotFoundError, BadRequestError} = require('../errors/errors');
 const {
     findDonations,
     retrieveDonation,
+    retrieveDonationByCampaignId,
+    retrieveDonationByUserId,
     createDonation,
     updateDonation,
     deleteDonation,
@@ -20,13 +22,39 @@ exports.donationsController = {
         }
     },
     async getDonationById(req, res, next) {
-        const { donationId } = req.params;
+        const {donationId} = req.params;
         try {
             const isId = mongoose.isValidObjectId(donationId);
             if (!isId) throw new BadRequestError('id in get donation by id');
             const donation = await retrieveDonation(donationId);
             if (!donation || donation.length === 0) throw new NotFoundError(`Donation with id <${donationId}>`);
             res.status(200).json(donation);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    async GetDonationByCampaignId(req, res, next) {
+        const {campaignId} = req.params;
+        try {
+            const isId = mongoose.isValidObjectId(campaignId);
+            if (!isId) throw new BadRequestError('id in get donation by campaign id');
+            const donations = await retrieveDonationByCampaignId(campaignId);
+            if (!donations || donations.length === 0) throw new NotFoundError(`Donations from campaign id <${campaignId}>`);
+            res.status(200).json(donations);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    async GetDonationByUserId(req, res, next) {
+        const {userId} = req.params;
+        try {
+            const isId = mongoose.isValidObjectId(userId);
+            if (!isId) throw new BadRequestError('id in get donation by campaign id');
+            const donations = await retrieveDonationByUserId(userId);
+            if (!donations || donations.length === 0) throw new NotFoundError(`Donations from user id <${userId}>`);
+            res.status(200).json(donations);
         } catch (error) {
             next(error);
         }
@@ -47,7 +75,7 @@ exports.donationsController = {
 
     async deleteDonation(req, res, next) {
         try {
-            const { donationId } = req.params;
+            const {donationId} = req.params;
             const isId = mongoose.isValidObjectId(donationId);
             if (!isId) throw new BadRequestError('id in delete donation');
             const deletedDonation = await deleteDonation(donationId);
@@ -63,7 +91,7 @@ exports.donationsController = {
 
     async updateDonation(req, res, next) {
         try {
-            const { donationId } = req.params;
+            const {donationId} = req.params;
             const isId = mongoose.isValidObjectId(donationId);
             if (!isId) throw new BadRequestError('id');
             if (Object.keys(req.body).length === 0) throw new BadRequestError('update donation');
