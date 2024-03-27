@@ -9,4 +9,4 @@ usersRouter.post('/', usersController.addUser);
 usersRouter.put('/:userId', usersController.updateUser);
 usersRouter.delete('/:userId', usersController.deleteUser);
 
-module.exports =  { usersRouter };
+module.exports ={ usersRouter } ;
