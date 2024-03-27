@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { usersController } = require('../controllers/usersController');
 const passport = require('passport');
-const { CLIENT_ID, CLIENT_SECRET, CLIENT_URL } = require('../constants');
+const {  CLIENT_URL } = require('../constants');
 
 
 const usersRouter = new Router();
