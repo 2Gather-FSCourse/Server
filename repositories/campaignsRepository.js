@@ -1,12 +1,23 @@
+const { MongoStorage } = require("../database/MongoStorage");
+const storage = new MongoStorage("campaigns");
+const retrieveCampaigns = async () => {
+  return storage.find();
+};
+const retrieveCampaignById = async (id) => storage.retrieve({ _id: id });
+const retrieveCampaignByTitle = async (org, title) =>
+  storage.retrieve({ orgId: org, title: title });
 
-const fetchCampaigns = async () => {
+const newCampaign = async (campaign) => {
+  return storage.create(campaign);
+};
+const updateCampaign = async () => {};
+const deleteCampaign = async (id) => storage.delete({ _id: id });
 
-}
-const fetchCampaignById = async () => {}
-const newCampaign = async () => {}
-const updateCampaign = async () => {}
-const deleteCampaign = async () => {}
-
-
-
-module.exports = { fetchCampaigns, fetchCampaignById, newCampaign, updateCampaign, deleteCampaign,}
+module.exports = {
+  fetchCampaigns: retrieveCampaigns,
+  retrieveCampaignByTitle,
+  retrieveCampaignById,
+  newCampaign,
+  updateCampaign,
+  deleteCampaign,
+};

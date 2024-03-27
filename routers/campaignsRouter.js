@@ -7,6 +7,6 @@ campaignsRouter.get('/', campaignsController.getCampaigns);
 campaignsRouter.get('/:campaignId', campaignsController.getCampaignByID);
 campaignsRouter.post('/', campaignsController.addCampaign);
 campaignsRouter.put('/:campaignId', campaignsController.updateCampaign);
-campaignsRouter.delete('/:campaignId', campaignsController.deleteCampaign);
+campaignsRouter.delete('/:campaignId', campaignsController.removeCampaign);
 
 module.exports = { campaignsRouter: campaignsRouter };
