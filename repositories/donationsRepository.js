@@ -1,4 +1,4 @@
-const { MongoStorage } = require('../database/mongoStorage');
+const { MongoStorage } = require('../database/MongoStorage');
 
 const mongoStorage = new MongoStorage('donations');
 
