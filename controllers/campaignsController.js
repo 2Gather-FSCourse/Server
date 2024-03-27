@@ -17,4 +17,4 @@ const {fetchCampaigns,} = require('../repositories/campaignsRepository');
     const deleteCampaign = (req, res) => {
         res.send('DELETE /campaigns/:CampaignId');
     }
- exports.campaignsController = {}
+ exports.campaignsController = {getCampaigns, getCampaignByID, addCampaign, updateCampaign, deleteCampaign};

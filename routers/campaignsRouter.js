@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const { campaginsController } = require('../controllers/campaignsController');
+const { campaignsController } = require('../controllers/campaignsController');
 
 const campaignsRouter = new Router();
 
-campaignsRouter.get('/', campaginsController.getCampagins);
-campaignsRouter.get('/:campaginId', campaginsController.getCampaginByID);
-campaignsRouter.post('/', campaginsController.addCampagin);
-campaignsRouter.put('/:campaginId', campaginsController.updateCampagin);
-campaignsRouter.delete('/:campaginId', campaginsController.deleteCampagin);
+campaignsRouter.get('/', campaignsController.getCampaigns);
+campaignsRouter.get('/:campaignId', campaignsController.getCampaignByID);
+campaignsRouter.post('/', campaignsController.addCampaign);
+campaignsRouter.put('/:campaignId', campaignsController.updateCampaign);
+campaignsRouter.delete('/:campaignId', campaignsController.deleteCampaign);
 
-module.exports = { campaginsRouter: campaignsRouter };
+module.exports = { campaignsRouter: campaignsRouter };
