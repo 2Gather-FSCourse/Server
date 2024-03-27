@@ -34,14 +34,11 @@ exports.usersController = {
     async addUser(req, res, next) {
         try {
             if (Object.keys(req.body).length === 0) throw new BadRequestError('create');
-            const { userType, name, age, img, contribution, savedCards } = req.body;
+            const { userType, name, phone } = req.body;
             if (
                 !userType
                 || !name
-                || !age
-                || !img
-                || !contribution
-                || !savedCards
+                || !phone
             ) throw new BadRequestError('create');
             const user = await createUser(req.body);
             res.status(200).json(user);
