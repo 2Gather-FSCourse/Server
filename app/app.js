@@ -4,8 +4,20 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const  errorHandler  = require('../middlewares/errorHandler');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+const passportSetup = require('../middlewares/passport');
+
 
 const app = express();
+app.use(cookieSession({
+    name: "session",
+    keys: ["2Gather"],
+    maxAge: 24 * 60 * 60 * 100,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const port = process.env.PORT || 3000;
 const { usersRouter } = require('../routers/usersRouter');

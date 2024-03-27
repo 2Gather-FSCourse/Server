@@ -2,4 +2,7 @@ module.exports = {
     DB_HOST: process.env.DB_HOST,
     DB_USER: process.env.DB_USER,
     DB_PASS: process.env.DB_PASS,
+    CLIENT_ID: process.env.CLIENT_ID,
+    CLIENT_SECRET: process.env.CLIENT_SECRET,
+    CLIENT_URL: process.env.CLIENT_URL,
 };
