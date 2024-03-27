@@ -9,4 +9,7 @@ donationsRouter.post('/', donationsController.addDonation);
 donationsRouter.put('/:donationId', donationsController.updateDonation);
 donationsRouter.delete('/:donationId', donationsController.deleteDonation);
 
+donationsRouter.get('/byCampaign/campaignId', donationsController.GetDonationByCampaignId);
+donationsRouter.get('/byUser/userId', donationsController.GetDonationByUserId);
+
 module.exports = { donationsRouter };
