@@ -1,9 +1,9 @@
-const { EventEmitter } = require('events');
+const {EventEmitter} = require('events');
 const mongoose = require('mongoose');
 const Path = require("path");
 const consts = require('../constants');
 
-const { DB_HOST, DB_USER, DB_PASS } = consts;
+const {DB_HOST, DB_USER, DB_PASS} = consts;
 const connect = () => {
     const url = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}`;
     mongoose
@@ -11,6 +11,7 @@ const connect = () => {
         .then(() => console.log(`connected to DB`))
         .catch((err) => console.log(`connection error: ${err}`));
 }
+
 class MongoStorage extends EventEmitter {
     constructor(entity) {
         super();
@@ -40,7 +41,8 @@ class MongoStorage extends EventEmitter {
     }
 
     update(id, data) {
-        return this.Model.findOneAndUpdate(id, data, { new: true })
+        return this.Model.findOneAndUpdate(id, data, {new: true})
     }
 }
-    module.exports = {MongoStorage, connect};
+
+module.exports = {MongoStorage, connect};

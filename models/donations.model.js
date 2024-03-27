@@ -15,6 +15,7 @@ const donationsSchema = new Schema(
         invoice: {type: String},
         amount: {type: Number},
         itemList: {type: [itemSchema]},
+        confirmed: {type: Boolean, default: false},
     }, {collection: 'donations'}
 );
 
