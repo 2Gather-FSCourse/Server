@@ -10,14 +10,17 @@ passport.use(new GoogleStrategy({
     scope: ['profile', 'email'],
  }, function(accessToken, refreshToken, profile, cb) {
         Authenticate(profile)
-            .then(user => cb(null, user))
+            .then(user => { console.log(user); cb(null, user)})
             .catch(err => cb(err));
     }));
 
 passport.serializeUser((user, callback) => {
     callback(null, user);
+
 });
 
 passport.deserializeUser((user, callback) => {
-    callback(null, user);
+    Authenticate(user)
+        .then(user => callback(null, user))
+        .catch(err => callback(err));
 });

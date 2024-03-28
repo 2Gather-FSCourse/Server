@@ -16,6 +16,7 @@ app.use(cookieSession({
     name: "session",
     keys: ["2Gather"],
     maxAge: 24 * 60 * 60 * 100,
+
 }));
 
 app.use(passport.initialize());
@@ -26,7 +27,7 @@ const { usersRouter } = require('../routers/usersRouter');
 
 app.use(cors(
     methods = "GET,POST,PUT,DELETE",
-    origin = "http://localhost:5173",
+    origin = "*",
 ));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
