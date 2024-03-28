@@ -23,15 +23,14 @@ app.use(passport.session());
 
 const port = process.env.PORT || 3000;
 const { usersRouter } = require('../routers/usersRouter');
-
+const { campaignsRouter } = require("../routers/campaignsRouter");
 app.use(cors(
     methods = "GET,POST,PUT,DELETE",
-    origin = "http://localhost:5173",
 ));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
-// app.use('/campaigns', campaignsRouter);
+app.use('/campaigns', campaignsRouter);
 // app.use('/donations', donationsRouter);
 app.use('/users', usersRouter);
 
