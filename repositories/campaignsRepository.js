@@ -10,14 +10,12 @@ const retrieveCampaignByTitle = async (org, title) =>
 const newCampaign = async (campaign) => {
   return storage.create(campaign);
 };
-const updateCampaign = async () => {};
-const deleteCampaign = async (id) => storage.delete({ _id: id });
+const putCampaign = async (id, data) => storage.update({ _id: id }, data);
 
 module.exports = {
   fetchCampaigns: retrieveCampaigns,
   retrieveCampaignByTitle,
   retrieveCampaignById,
   newCampaign,
-  updateCampaign,
-  deleteCampaign,
+  putCampaign,
 };
