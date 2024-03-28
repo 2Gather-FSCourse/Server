@@ -2,25 +2,37 @@ require('express-async-errors');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-const errorHandler  = require('../middlewares/errorHandler');
-const {STRIPE_SECRET_KEY, STRIPE_PUBLIC_KEY} = require('../constants');
-
+const  errorHandler  = require('../middlewares/errorHandler');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+const passportSetup = require('../middlewares/passport');
 const { connect } = require('../database/MongoStorage');
-const app = express();
 
+const {STRIPE_SECRET_KEY, STRIPE_PUBLIC_KEY} = require('../constants');
 connect();
-const port = process.env.PORT || 3001;
-const { campaignsRouter } = require('../routers/campaignsRouter');
-const { donationsRouter } = require('../routers/donationsRouter');
+
+const app = express();
+app.use(cookieSession({
+    name: "session",
+    keys: ["2Gather"],
+    maxAge: 24 * 60 * 60 * 100,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const port = process.env.PORT || 3000;
 const { usersRouter } = require('../routers/usersRouter');
 
-app.use(cors());
+app.use(cors(
+    methods = "GET,POST,PUT,DELETE",
+));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
-app.use('/campaigns', campaignsRouter);
-app.use('/donations', donationsRouter);
-// app.use('/users', usersRouter);
+// app.use('/campaigns', campaignsRouter);
+// app.use('/donations', donationsRouter);
+app.use('/users', usersRouter);
 
 app.use(errorHandler);
 
