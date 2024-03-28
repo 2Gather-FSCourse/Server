@@ -26,6 +26,7 @@ const { usersRouter } = require('../routers/usersRouter');
 
 app.use(cors(
     methods = "GET,POST,PUT,DELETE",
+    origin = "http://localhost:5173",
 ));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
