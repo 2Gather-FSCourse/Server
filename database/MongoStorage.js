@@ -36,6 +36,23 @@ class MongoStorage extends EventEmitter {
         return this.Model.insertMany(data);
     }
 
+    async findOrCreate(profile) {
+        let user = await this.Model.findOne({googleId: profile.id});
+
+        if (!user) {
+            user = await this.Model.create({
+                googleId: profile.id,
+                name: profile.displayName.givenName,
+                age: 18,
+                userType: 'Donor',
+                phone: '0000000000',
+                email: profile.emails[0].value,
+                img: profile.photos[0].value
+            });
+        }
+        return user;
+    }
+
     delete(id) {
         return this.Model.findByIdAndDelete(id);
     }
