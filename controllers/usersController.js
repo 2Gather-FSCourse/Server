@@ -55,12 +55,6 @@ exports.usersController = {
             const isId = mongoose.isValidObjectId(userId);
             if (!isId) throw new BadRequestError('id');
             if (Object.keys(req.body).length === 0) throw new BadRequestError('update');
-            // const { userType, name, phone } = req.body;
-            // if (
-            //     !userType
-            //     || !name
-            //     || !phone
-            // ) throw new BadRequestError('update');
             const user = await updateUser(userId, req.body);
             if (!user || user.length === 0) throw new NotFoundError(`user with id <${userId}>`);
             res.status(200).json(user);
