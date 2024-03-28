@@ -6,8 +6,10 @@ const  errorHandler  = require('../middlewares/errorHandler');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const passportSetup = require('../middlewares/passport');
+const { connect } = require('../database/MongoStorage');
 
 const {STRIPE_SECRET_KEY, STRIPE_PUBLIC_KEY} = require('../constants');
+connect();
 
 const app = express();
 app.use(cookieSession({

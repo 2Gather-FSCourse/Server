@@ -34,10 +34,10 @@ exports.usersController = {
     async addUser(req, res, next) {
         try {
             if (Object.keys(req.body).length === 0) throw new BadRequestError('create');
-            const { userType, name, phone } = req.body;
+            const { userType, age, phone } = req.body;
             if (
                 !userType
-                || !name
+                || !age
                 || !phone
             ) throw new BadRequestError('create');
             const user = await createUser(req.body);
@@ -55,6 +55,12 @@ exports.usersController = {
             const isId = mongoose.isValidObjectId(userId);
             if (!isId) throw new BadRequestError('id');
             if (Object.keys(req.body).length === 0) throw new BadRequestError('update');
+            // const { userType, name, phone } = req.body;
+            // if (
+            //     !userType
+            //     || !name
+            //     || !phone
+            // ) throw new BadRequestError('update');
             const user = await updateUser(userId, req.body);
             if (!user || user.length === 0) throw new NotFoundError(`user with id <${userId}>`);
             res.status(200).json(user);
