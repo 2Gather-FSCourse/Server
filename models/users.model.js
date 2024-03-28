@@ -25,7 +25,7 @@ const usersSchema = new Schema({
     age: { type: Number, required: true },
     img: { type: String },
     phone: { type: String, required: true },
-    contribution: [donationsSchema],
+    contribution: {type: [donationsSchema]},
 }, { collection: 'users' });
 
 module.exports = model('user', usersSchema);
