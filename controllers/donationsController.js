@@ -58,17 +58,9 @@ exports.donationsController = {
         }
     },
 
-    async addDonation(req, res, next) {
-        try {
-            if (Object.keys(req.body).length === 0) throw new BadRequestError('add donation');
-            const newDonation = await createDonation(req.body);
-            res.status(200).json(newDonation);
-        } catch (error) {
-            if (error.name === 'ValidationError') {
-                error.status = 400;
-            }
-            next(error);
-        }
+    async addDonation(donation) {
+        if (Object.keys(donation).length === 0) throw new BadRequestError('add donation');
+        return await createDonation(donation);
     },
 
     async updateDonation(req, res, next) {

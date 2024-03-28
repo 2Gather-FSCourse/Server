@@ -12,7 +12,6 @@ const donationsSchema = new Schema(
         campaignId: {type: String, required: true},
         userId: {type: String, required: true},
         transactionId: {type: String},
-        invoice: {type: String},
         amount: {type: Number},
         itemList: {type: [itemSchema]},
         confirmation: {type: Boolean, default: false},

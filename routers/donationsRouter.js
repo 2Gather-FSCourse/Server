@@ -1,11 +1,12 @@
 const { Router } = require('express');
 const { donationsController } = require('../controllers/donationsController');
+const { stripeHandler } = require('../middlewares/stripeHandler');
 
 const donationsRouter = new Router();
 
 donationsRouter.get('/', donationsController.getAllDonations);
 donationsRouter.get('/:donationId', donationsController.getDonationById);
-donationsRouter.post('/', donationsController.addDonation);
+donationsRouter.post('/', stripeHandler.makeNewDonation);
 donationsRouter.put('/:donationId', donationsController.updateDonation);
 
 donationsRouter.get('/byCampaign/campaignId', donationsController.GetDonationByCampaignId);
