@@ -1,7 +1,7 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
 const { CLIENT_ID, CLIENT_SECRET } = require('../constants');
-const { Authenticate } = require('../repositories/usersRepository');
+const { Authenticate, retrieveUser } = require('../repositories/usersRepository');
 
 passport.use(new GoogleStrategy({
     clientID: CLIENT_ID,
@@ -9,18 +9,19 @@ passport.use(new GoogleStrategy({
     callbackURL: '/users/google/callback',
     scope: ['profile', 'email'],
  }, function(accessToken, refreshToken, profile, cb) {
-        Authenticate(profile)
-            .then(user => { console.log(user); cb(null, user)})
+         Authenticate(profile)
+            .then(user => cb(null, user))
             .catch(err => cb(err));
     }));
 
 passport.serializeUser((user, callback) => {
-    callback(null, user);
+    console.log("serialize user:" ,user);
+    callback(null, user._id);
 
 });
 
-passport.deserializeUser((user, callback) => {
-    Authenticate(user)
-        .then(user => callback(null, user))
+passport.deserializeUser((id, callback) => {
+    retrieveUser(id)
+        .then(user => { console.log("deserialize user:" ,user); callback(null, user)})
         .catch(err => callback(err));
 });

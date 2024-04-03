@@ -21,13 +21,11 @@ usersRouter.get('/login/failed', (req, res) => {
 });
 
 usersRouter.get('/login/success', (req, res) => {
-   if(req.user){
-       req.session.user = req.user;
-       req.session.isLoggedIn = true;
+   if(req.user) {
        res.status(200).json({
-          error:false,
-            message: "Login Successful",
-            user: req.user,
+           error: false,
+           message: "Login Successful",
+           user: req.user,
        });
    } else{
        res.status(403).json({
