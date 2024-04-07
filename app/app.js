@@ -12,18 +12,6 @@ const {STRIPE_SECRET_KEY, STRIPE_PUBLIC_KEY} = require('../constants');
 connect();
 
 const app = express();
-app.use(session({
-    secret: '2Gather',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-const port = process.env.PORT || 3000;
-const { usersRouter } = require('../routers/usersRouter');
 
 const corsOptions = {
     origin: '*',
@@ -31,6 +19,22 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(session({
+    secret: '2Gather',
+    maxAge: 24 * 60 * 60 * 1000,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+const port = process.env.PORT || 3000;
+const { usersRouter } = require('../routers/usersRouter');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
