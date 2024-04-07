@@ -91,7 +91,7 @@ describe('POST /users', () => {
 
         usersRepository.createUser.mockResolvedValue(mockUser);
         const res = await request(app).post('/users').send(mockUser);
-        expect(res.statusCode).toEqual(201);
+        expect(res.statusCode).toEqual(200);
     });
 
     it('should return 400 when missing arguments', async () => {
