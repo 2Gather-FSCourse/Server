@@ -11,24 +11,14 @@ usersRouter.post('/', usersController.addUser);
 usersRouter.put('/:userId', usersController.updateUser);
 usersRouter.delete('/:userId', usersController.deleteUser);
 
-// usersRouter.get('/login/success', (req, res, next) => {
-//    try{
-//     if(req.user) {
-//        res.status(200).json({
-//            error: false,
-//            message: "Login Successful",
-//            user: req.user,
-//        });
-//    } else{
-//        res.status(403).json({
-//               error:true,
-//               message: "Not Authorized"
-//        });
-//    }
-//    } catch (err) {
-//        next(err);
-//    }
-// });
+usersRouter.get('/login/success', (req, res, next) => {
+       res.status(200).json({
+           error: false,
+           message: "Login Successful",
+           user: req.user,
+       });
+       console.log("login success User:", req.user);
+});
 
 
 usersRouter.get('/logout', (req, res) => {

@@ -25,7 +25,7 @@ passport.serializeUser((user, callback) => {
 
 });
 
-passport.deserializeUser(async (id, callback) => {
+passport.deserializeUser( passport.serializeUser, async (id, callback) => {
     const user = await retrieveUser(id);
     console.log("deserialize user:" ,user);
     if (!user) {
