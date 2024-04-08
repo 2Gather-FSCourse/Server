@@ -16,6 +16,25 @@ exports.stripeController = {
         return [payment, confirmation]
     },
 
+    async createPaymentSession(){
+        const result = await stripe.checkout.sessions.create({
+            submit_type: 'donate',
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price_data: '{{PRICE_ID}}',
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            success_url: 'http://localhost:5173/success',
+            cancel_url: 'http://localhost:5173/cancel',
+        });
+
+        if 
+
+    },
+
     async createCustomer(email, name, payment_method) {
         return await stripe.customers.create({
             email,
