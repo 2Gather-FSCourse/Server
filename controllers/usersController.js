@@ -110,8 +110,7 @@ exports.usersController = {
                     img,
                     phone,
                 };
-                res.status(200)
-                    .json(req.session.user);
+                res.status(200).json(req.session.user);
             } else {
                 throw new BadRequestError('password');
             }
