@@ -96,6 +96,7 @@ exports.usersController = {
             if (!user || user.length === 0) throw new NotFoundError(`user with email address <${email}>`);
             if (await bcrypt.compare(password, user.password)) {
                 req.session.user = {
+                    id: user._id,
                     userType: user.userType,
                     name: user.name,
                     age: user.age,
@@ -120,7 +121,7 @@ exports.usersController = {
     },
     async logout(req, res, next) {
         try {
-            // req.session.destroy(req.session.sessionID);
+            req.session.destroy(req.session.sessionID);
             localStorage.removeItem('user');
             res.status(200)
                 .json('logged out');
