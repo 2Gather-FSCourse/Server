@@ -7,6 +7,7 @@ const passportSetup = require('../middlewares/passport');
 const session = require('express-session');
 const passport = require('passport');
 const { connect } = require('../database/MongoStorage');
+const store = new session.MemoryStore();
 
 const {STRIPE_SECRET_KEY, STRIPE_PUBLIC_KEY} = require('../constants');
 connect();
@@ -18,15 +19,21 @@ const corsOptions = {
     methods: 'GET,POST,PUT,DELETE',
 };
 
-app.use(cors(corsOptions));
-
 app.use(session({
-    secret: '2Gather',
-    maxAge: 24 * 60 * 60 * 1000,
+    secret: 'some secret',
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { maxAge: 60000 },
+    saveUninitialized: false,
+    store,
 }));
+
+// app.use(session({
+//     secret: '2Gather',
+//     maxAge: 24 * 60 * 60 * 1000,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false }
+// }));
 
 
 app.use(passport.initialize());
@@ -36,6 +43,7 @@ app.use(passport.session());
 const port = process.env.PORT || 3000;
 const { usersRouter } = require('../routers/usersRouter');
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
