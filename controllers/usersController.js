@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { NotFoundError, BadRequestError  } = require('../errors/errors');
+const jwt = require('jsonwebtoken');
+
 const bcrypt = require('bcrypt');
 
 const {
@@ -92,25 +94,11 @@ exports.usersController = {
             if (!email || !password) throw new NotFoundError('Login - missing arguments');
             const user = await retrieveUserByEmail(email);
             if (!user || user.length === 0) throw new NotFoundError(`user with email address <${email}>`);
-            const {
-                userType,
-                name,
-                age,
-                img,
-                phone,
-            } = user;
-            if (req.session.authenticated) {
-                res.json(req.session);
-            } else if (await bcrypt.compare(password, user.password)) {
-                req.session.authenticated = true;
-                req.session.user = {
-                    userType,
-                    name,
-                    age,
-                    img,
-                    phone,
-                };
-                res.status(200).json(req.session.user);
+            if (await bcrypt.compare(password, user.password)) {
+                const userObject = user.toObject();
+                delete userObject.password;
+                const token = jwt.sign(userObject, process.env.JWT_SECRET, { expiresIn: '30m' });
+                res.cookie('token', token, {httpOnly: true}).status(200).json(user);
             } else {
                 throw new BadRequestError('password');
             }
@@ -130,30 +118,30 @@ exports.usersController = {
             next(error);
         }
     },
-    async googleLogin(req, res, next) {
-        try {
-            if (req.user) {
-                req.session.authenticated = true;
-                req.session.user = {
-                    userType: req.user.userType,
-                    name: req.user.name,
-                    age: req.user.age,
-                    img: req.user.img,
-                    phone: req.user.phone,
-                };
-                res.status(200).json({
-                    error: false,
-                    message: 'Login Successful',
-                    user: req.session.user,
-                });
-            } else {
-                res.status(401).json({
-                    error: true,
-                    message: 'Login Failed',
-                });
-            }
-        } catch (error) {
-            next(error);
-        }
-    },
+    // async googleLogin(req, res, next) {
+    //     try {
+    //         if (req.user) {
+    //             req.session.authenticated = true;
+    //             req.session.user = {
+    //                 userType: req.user.userType,
+    //                 name: req.user.name,
+    //                 age: req.user.age,
+    //                 img: req.user.img,
+    //                 phone: req.user.phone,
+    //             };
+    //             res.status(200).json({
+    //                 error: false,
+    //                 message: 'Login Successful',
+    //                 user: req.session.user,
+    //             });
+    //         } else {
+    //             res.status(401).json({
+    //                 error: true,
+    //                 message: 'Login Failed',
+    //             });
+    //         }
+    //     } catch (error) {
+    //         next(error);
+    //     }
+    // },
 };

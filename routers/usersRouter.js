@@ -23,7 +23,7 @@ usersRouter.get('/google/callback', passport.authenticate('google',{
 }
 );
 
-usersRouter.get('/login/success', usersController.googleLogin);
+// usersRouter.get('/login/success', usersController.googleLogin);
 
 
 module.exports ={ usersRouter } ;
