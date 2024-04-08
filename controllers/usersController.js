@@ -95,10 +95,19 @@ exports.usersController = {
             const user = await retrieveUserByEmail(email);
             if (!user || user.length === 0) throw new NotFoundError(`user with email address <${email}>`);
             if (await bcrypt.compare(password, user.password)) {
-                const userObject = user.toObject();
-                delete userObject.password;
-                const token = jwt.sign(userObject, process.env.JWT_SECRET, { expiresIn: '30m' });
-                res.cookie('token', token, {httpOnly: true}).status(200).json(user);
+                req.session.user = {
+                    userType: user.userType,
+                    name: user.name,
+                    age: user.age,
+                    img: user.img,
+                    phone: user.phone,
+                };
+                res.json(req.session.user);
+                console.log(req.session.user);
+                // const userObject = user.toObject();
+                // delete userObject.password;
+                // const token = jwt.sign(userObject, process.env.JWT_SECRET, { expiresIn: '30m' });
+                // res.cookie('token', token, {httpOnly: true}).status(200).json(user);
             } else {
                 throw new BadRequestError('password');
             }
@@ -111,7 +120,8 @@ exports.usersController = {
     },
     async logout(req, res, next) {
         try {
-            req.session.destroy(req.session.sessionID);
+            // req.session.destroy(req.session.sessionID);
+            localStorage.removeItem('user');
             res.status(200)
                 .json('logged out');
         } catch (error) {

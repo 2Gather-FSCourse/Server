@@ -2,6 +2,8 @@ const { Router } = require('express');
 const { usersController } = require('../controllers/usersController');
 const passport = require('passport');
 const {  CLIENT_URL } = require('../constants');
+// const { cookieJwtAuth } = require('../middlewares/cookieJwtAuth');
+
 
 const usersRouter = new Router();
 
