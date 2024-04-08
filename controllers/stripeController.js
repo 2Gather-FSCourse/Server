@@ -30,9 +30,6 @@ exports.stripeController = {
             success_url: 'http://localhost:5173/success',
             cancel_url: 'http://localhost:5173/cancel',
         });
-
-        if 
-
     },
 
     async createCustomer(email, name, payment_method) {
