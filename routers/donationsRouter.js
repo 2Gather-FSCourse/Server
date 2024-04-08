@@ -9,7 +9,7 @@ donationsRouter.get('/:donationId', donationsController.getDonationById);
 donationsRouter.post('/', stripeHandler.makeNewDonation);
 donationsRouter.put('/:donationId', donationsController.updateDonation);
 
-donationsRouter.get('/byCampaign/campaignId', donationsController.GetDonationByCampaignId);
-donationsRouter.get('/byUser/userId', donationsController.GetDonationByUserId);
+donationsRouter.get('/list?campaign_id=campaignId&filterBy=value', donationsController.GetDonationByCampaignId);
+donationsRouter.get('/list?user_id=userId&filterBy=value', donationsController.GetDonationByUserId);
 
 module.exports = { donationsRouter };
