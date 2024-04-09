@@ -14,7 +14,7 @@ connect();
 const app = express();
 
 const corsOptions = {
-    origin: ['http://localhost:5173','https://public-information-marag.netlify.app/'],
+    origin: ['http://localhost:5173','https://public-information-marag.netlify.app/', 'https://2gather.netlify.app/'],
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
 };
