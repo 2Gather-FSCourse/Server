@@ -13,7 +13,6 @@ const {
   ServerError,
 } = require("../errors/errors");
 const mongoose = require("mongoose");
-const { DEFAULT_CAMPAIGN_IMAGE } = require("../utils/constants");
 const keys = [
   // "founderId",
   "title",
