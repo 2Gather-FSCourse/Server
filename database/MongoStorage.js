@@ -2,8 +2,8 @@ const { EventEmitter } = require("events");
 const mongoose = require("mongoose");
 const Path = require("path");
 const constants = require("constants");
+require('dotenv').config();
 
-// const { DB_HOST, DB_USER, DB_PASS } = constants;
 const connect = () => {
   const url = `mongodb+srv://${process.env.DB_HOST}:${process.env.DB_PASS}@${process.env.DB_HOST}`;
   mongoose
