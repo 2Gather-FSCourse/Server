@@ -102,6 +102,9 @@ exports.usersController = {
                     age: user.age,
                     img: user.img,
                     phone: user.phone,
+                    email: user.email,
+                    password: user.password,
+                    orgId: user.orgId,
                 };
                 res.json(req.session.user);
                 console.log(req.session.user);
