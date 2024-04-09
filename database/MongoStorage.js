@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const Path = require("path");
 const constants = require("constants");
 
-const { DB_HOST, DB_USER, DB_PASS } = constants;
+// const { DB_HOST, DB_USER, DB_PASS } = constants;
 const connect = () => {
-  const url = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}`;
+  const url = `mongodb+srv://${process.env.DB_HOST}:${process.env.DB_PASS}@${process.env.DB_HOST}`;
   mongoose
     .connect(url)
     .then(() => console.log(`connected to DB`))
