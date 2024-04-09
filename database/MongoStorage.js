@@ -1,8 +1,9 @@
 const { EventEmitter } = require("events");
 const mongoose = require("mongoose");
 const Path = require("path");
+const constants = require("constants");
 
-const { DB_HOST, DB_USER, DB_PASS } = consts;
+const { DB_HOST, DB_USER, DB_PASS } = constants;
 const connect = () => {
   const url = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}`;
   mongoose
