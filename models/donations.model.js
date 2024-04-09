@@ -15,6 +15,7 @@ const donationsSchema = new Schema(
         amount: {type: Number},
         itemList: {type: [itemSchema]},
         confirmation: {type: Boolean, default: false},
+        transactionDate: {type: Date, default: Date.now},
     }, {collection: 'donations'}
 );
 

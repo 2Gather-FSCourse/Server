@@ -4,13 +4,32 @@ const {BadRequestError, NotFoundError} = require('../errors/errors');
 
 exports.stripeHandler = {
     async TryDonation(req, res, next) {
-        const {userId, campaignId} = req.body;
+        //       const {userId, campaignId} = req.body;
         try {
-            if (!userId || !campaignId) throw new BadRequestError('missing parameters in try donation');
+            console.log(req.body);
             const paymentSession = await stripeController.createPaymentSession();
-            if(!paymentSession) throw new NotFoundError('payment session not created');
             console.log(paymentSession);
+            if (!paymentSession) throw new NotFoundError('payment session not created');
             res.status(200).json(paymentSession);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    async donationPayment(req, res, next) {
+        try {
+            const {userId, campaignId} = req.body;
+            const paymentIntent = await stripeController.donationPaymentIntent();
+            const amount = 19.99;
+            const donation = {
+                userId,
+                campaignId,
+                amount,
+                transactionId: paymentIntent.id
+            };
+            const donationRes = await donationsController.addDonation(donation);
+            if(!donationRes) throw new BadRequestError('donation not created');
+            res.status(200).json(paymentIntent.client_secret);
         } catch (error) {
             next(error);
         }

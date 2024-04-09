@@ -40,6 +40,7 @@ const port = process.env.PORT || 3000;
 const {usersRouter} = require('../routers/usersRouter');
 const {campaignsRouter} = require('../routers/campaignsRouter');
 const {donationsRouter} = require('../routers/donationsRouter');
+const {stripeRouter} = require('../routers/stripeRouter');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -47,6 +48,7 @@ app.use(logger('dev'));
 app.use('/campaigns', campaignsRouter);
 app.use('/donations', donationsRouter);
 app.use('/users', usersRouter);
+app.use('/stripe', stripeRouter);
 // app.use(cookieJwtAuth);
 
 app.use(errorHandler);
