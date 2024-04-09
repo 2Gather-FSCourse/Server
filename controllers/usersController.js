@@ -62,11 +62,6 @@ exports.usersController = {
             const isId = mongoose.isValidObjectId(userId);
             if (!isId) throw new BadRequestError('id');
             if (Object.keys(req.body).length === 0) throw new BadRequestError('update');
-            const { password } = req.body;
-                if (password) {
-                    const hashedPassword = await bcrypt.hash(password, 10);
-                    req.body.password = hashedPassword;
-                }
             const user = await updateUser(userId, req.body);
             if (!user || user.length === 0) throw new NotFoundError(`user with id <${userId}>`);
             res.status(200).json(user);
@@ -108,7 +103,6 @@ exports.usersController = {
                     img: user.img,
                     phone: user.phone,
                     email: user.email,
-                    password: user.password,
                     orgId: user.orgId,
                 };
                 res.json(req.session.user);
