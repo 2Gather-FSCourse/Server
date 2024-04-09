@@ -6,7 +6,8 @@ const retrieveCampaigns = async () => {
 const retrieveCampaignById = async (id) => storage.retrieve({ _id: id });
 const retrieveCampaignByTitle = async (org, title) =>
   storage.retrieve({ orgId: org, title: title });
-
+const searchTitle = async (title) =>
+  storage.find({ title: { $regex: title ? title : "", $options: "i" } });
 const newCampaign = async (campaign) => {
   return storage.create(campaign);
 };
@@ -18,4 +19,5 @@ module.exports = {
   retrieveCampaignById,
   newCampaign,
   putCampaign,
+  searchTitle,
 };
