@@ -13,13 +13,19 @@ connect();
 
 const app = express();
 
-const corsOptions = {
-    origin: ['http://localhost:5173/', 'https://public-information-marag.netlify.app/', 'https://2gather.netlify.app/', 'https://66158b8476886c1c54b2bad8--astounding-manatee-ad972a.netlify.app/'],
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true,
-};
+// const corsOptions = {
+//     origin: ['http://localhost:5173/', 'https://public-information-marag.netlify.app/', 'https://2gather.netlify.app/', 'https://66158b8476886c1c54b2bad8--astounding-manatee-ad972a.netlify.app/'],
+//     methods: 'GET,POST,PUT,DELETE',
+//     credentials: true,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors({
+    origin: function(origin, callback) {
+        callback(null, true);
+    },
+    credentials: true
+}));
 app.use(session({
     secret: 'together',
     resave: false,
