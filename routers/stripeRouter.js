@@ -4,8 +4,6 @@ const { stripeHandler } = require('../middlewares/stripeHandler');
 
 const stripeRouter = new Router();
 
-stripeRouter.get('/', stripeController.getPublicKey);
-stripeRouter.post('/', stripeController.createPaymentSession);
-
+stripeRouter.post('/', stripeController.donationPaymentIntent);
 
 module.exports = { stripeRouter };
