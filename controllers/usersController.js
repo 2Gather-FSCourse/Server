@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { NotFoundError, BadRequestError  } = require('../errors/errors');
+const jwt = require('jsonwebtoken');
+
 const bcrypt = require('bcrypt');
 
 const {
@@ -92,25 +94,19 @@ exports.usersController = {
             if (!email || !password) throw new NotFoundError('Login - missing arguments');
             const user = await retrieveUserByEmail(email);
             if (!user || user.length === 0) throw new NotFoundError(`user with email address <${email}>`);
-            const {
-                userType,
-                name,
-                age,
-                img,
-                phone,
-            } = user;
-            if (req.session.authenticated) {
-                res.json(req.session);
-            } else if (await bcrypt.compare(password, user.password)) {
-                req.session.authenticated = true;
+            if (await bcrypt.compare(password, user.password)) {
                 req.session.user = {
-                    userType,
-                    name,
-                    age,
-                    img,
-                    phone,
+                    id: user._id,
+                    userType: user.userType,
+                    name: user.name,
+                    age: user.age,
+                    img: user.img,
+                    phone: user.phone,
+                    email: user.email,
+                    orgId: user.orgId,
                 };
-                res.status(200).json(req.session.user);
+                res.json(req.session.user);
+                console.log(req.session.user);
             } else {
                 throw new BadRequestError('password');
             }
@@ -124,36 +120,37 @@ exports.usersController = {
     async logout(req, res, next) {
         try {
             req.session.destroy(req.session.sessionID);
+            localStorage.removeItem('user');
             res.status(200)
                 .json('logged out');
         } catch (error) {
             next(error);
         }
     },
-    async googleLogin(req, res, next) {
-        try {
-            if (req.user) {
-                req.session.authenticated = true;
-                req.session.user = {
-                    userType: req.user.userType,
-                    name: req.user.name,
-                    age: req.user.age,
-                    img: req.user.img,
-                    phone: req.user.phone,
-                };
-                res.status(200).json({
-                    error: false,
-                    message: 'Login Successful',
-                    user: req.session.user,
-                });
-            } else {
-                res.status(401).json({
-                    error: true,
-                    message: 'Login Failed',
-                });
-            }
-        } catch (error) {
-            next(error);
-        }
-    },
+    // async googleLogin(req, res, next) {
+    //     try {
+    //         if (req.user) {
+    //             req.session.authenticated = true;
+    //             req.session.user = {
+    //                 userType: req.user.userType,
+    //                 name: req.user.name,
+    //                 age: req.user.age,
+    //                 img: req.user.img,
+    //                 phone: req.user.phone,
+    //             };
+    //             res.status(200).json({
+    //                 error: false,
+    //                 message: 'Login Successful',
+    //                 user: req.session.user,
+    //             });
+    //         } else {
+    //             res.status(401).json({
+    //                 error: true,
+    //                 message: 'Login Failed',
+    //             });
+    //         }
+    //     } catch (error) {
+    //         next(error);
+    //     }
+    // },
 };
