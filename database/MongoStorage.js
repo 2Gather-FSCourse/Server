@@ -5,7 +5,7 @@ const constants = require("constants");
 require('dotenv').config();
 
 const connect = () => {
-  const url = `mongodb+srv://${process.env.DB_HOST}:${process.env.DB_PASS}@${process.env.DB_HOST}`;
+  const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`;
   mongoose
     .connect(url)
     .then(() => console.log(`connected to DB`))
