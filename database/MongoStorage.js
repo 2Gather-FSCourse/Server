@@ -1,7 +1,6 @@
 const { EventEmitter } = require("events");
 const mongoose = require("mongoose");
 const Path = require("path");
-const consts = require("../utils/constants");
 
 const { DB_HOST, DB_USER, DB_PASS } = consts;
 const connect = () => {
