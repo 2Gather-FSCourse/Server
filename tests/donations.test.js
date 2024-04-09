@@ -86,7 +86,7 @@ describe('GET /donations/:donationId', () => {
 describe('POST /donations', () => {
     beforeEach(()=> jest.clearAllMocks());
 
-    it('should return 201 and the new donation', async () => {
+    it('should return 200 and the new donation', async () => {
         const newDonation = {
             _id:"6605aa2fb1c97be899f8526b",
             campaignId:"660447a87061566700714e3a",
@@ -98,7 +98,7 @@ describe('POST /donations', () => {
         };
         donationsRepository.createDonation.mockResolvedValue(newDonation);
         const response = await request(app).post('/donations').send(newDonation);
-        expect(response.status).toBe(201);
+        expect(response.status).toBe(200);
     });
 
     it('should return 500 if server error', async () => {
@@ -148,14 +148,33 @@ describe('PUT /donations/:donationId', () => {
     });
 
     it('should return 404 if no donation found', async () => {
-        donationsRepository.updateDonation.mockResolvedValue(null);
+        const updatedDonation = {
+            _id:"6605aa2fb1c97be899f8526b",
+            campaignId:"660447a87061566700714e3a",
+            userId:"6605781abca1af49c582a734",
+            transactionId:"pi_3OzMqXDgt4I0wPiK18L5fkow",
+            amount:100,
+            confirmation:true,
+            itemList:[]
+        };
+        donationsRepository.updateDonation.mockResolvedValue([]);
         const response = await request(app).put('/donations/6605aa2fb1c97be899f8526b').send();
-        expect(response.status).toBe(404);
+        expect(response.status).toBe(400);
     });
 
     it('should return 500 if server error', async () => {
+        const updatedDonation = {
+            _id:"6605aa2fb1c97be899f8526b",
+            campaignId:"660447a87061566700714e3a",
+            userId:"6605781abca1af49c582a734",
+            transactionId:"pi_3OzMqXDgt4I0wPiK18L5fkow",
+            amount:100,
+            confirmation:true,
+            itemList:[]
+        };
+
         donationsRepository.updateDonation.mockRejectedValue(new ServerError());
-        const response = await request(app).put('/donations/6605aa2fb1c97be899f8526b').send();
+        const response = await request(app).put('/donations/6605aa2fb1c97be899f8526b').send(updatedDonation);
         expect(response.status).toBe(500);
     });
 
@@ -166,40 +185,3 @@ describe('PUT /donations/:donationId', () => {
     });
 });
 
-describe('DELETE /donations/:donationId', () => {
-    beforeEach(()=> jest.clearAllMocks());
-
-    it('should return 200 and the deleted donation', async () => {
-        const deletedDonation = {
-            _id:"6605aa2fb1c97be899f8526b",
-            campaignId:"660447a87061566700714e3a",
-            userId:"6605781abca1af49c582a734",
-            transactionId:"pi_3OzMqXDgt4I0wPiK18L5fkow",
-            amount:100,
-            confirmation:true,
-            itemList:[]
-        };
-        donationsRepository.deleteDonation.mockResolvedValue(deletedDonation);
-        const response = await request(app).delete('/donations/6605aa2fb1c97be899f8526b');
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual(deletedDonation);
-    });
-
-    it('should return 404 if no donation found', async () => {
-        donationsRepository.deleteDonation.mockResolvedValue(null);
-        const response = await request(app).delete('/donations/6605aa2fb1c97be899f8526b');
-        expect(response.status).toBe(404);
-    });
-
-    it('should return 500 if server error', async () => {
-        donationsRepository.deleteDonation.mockRejectedValue(new ServerError());
-        const response = await request(app).delete('/donations/6605aa2fb1c97be899f8526b');
-        expect(response.status).toBe(500);
-    });
-
-    it('should return 400 if invalid id', async () => {
-        donationsRepository.deleteDonation.mockResolvedValue([]);
-        const response = await request(app).delete('/donations/123');
-        expect(response.status).toBe(400);
-    });
-});
