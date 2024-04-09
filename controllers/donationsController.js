@@ -59,9 +59,15 @@ exports.donationsController = {
         }
     },
 
-    async addDonation(donation) {
-        if (Object.keys(donation).length === 0) throw new BadRequestError('add donation');
-        return await createDonation(donation);
+    async addDonation(req, res, next) {
+        try {
+            if (Object.keys(req.body).length === 0) throw new BadRequestError('create');
+            const donationRes= await createDonation(req.body);
+            console.log(donationRes);
+            res.status(200).json(donationRes);
+        } catch (error) {
+            next(error);
+        }
     },
 
     async updateDonation(req, res, next) {
