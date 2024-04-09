@@ -12,6 +12,7 @@ const {
   ServerError,
 } = require("../errors/errors");
 const mongoose = require("mongoose");
+const { DEFAULT_CAMPAIGN_IMAGE } = require("../utils/constants");
 const keys = [
   "founderId",
   "title",
@@ -27,6 +28,10 @@ checkBody = (req) => {
   keys.forEach((key) => {
     if (!req.body[key]) throw new NotFoundError(`The key ${key} is required`);
   });
+  if (req.body.startDate > req.body.endDate)
+    throw new BadRequestError("Start date must be before end date");
+  if (req.body.goal < 0)
+    throw new BadRequestError("Goal must be greater than 0");
 };
 const getCampaigns = async (req, res) => {
   const campaigns = await fetchCampaigns();
@@ -45,8 +50,8 @@ const addCampaign = async (req, res) => {
   const { title, orgId } = req.body;
   const titleExists = await retrieveCampaignByTitle(orgId, title);
   if (titleExists) throw new AlreadyExistsError(`The campaign '${title}'`);
-  const campaign = await newCampaign(req.body);
-  res.status(200).json(campaign);
+  // const campaign = await newCampaign(req.body);
+  res.status(201).json(campaign);
 };
 const updateCampaign = async (req, res) => {
   checkBody(req);
