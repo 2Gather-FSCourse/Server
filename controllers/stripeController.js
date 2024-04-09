@@ -16,8 +16,8 @@ exports.stripeController = {
         return [payment, confirmation]
     },
 
-    async createPaymentSession(){
-        const result = await stripe.checkout.sessions.create({
+    async createPaymentSession(req, res, next) {
+        const session = await stripe.checkout.sessions.create({
             submit_type: 'donate',
             payment_method_types: ['card'],
             line_items: [
@@ -30,6 +30,8 @@ exports.stripeController = {
             success_url: 'http://localhost:5173/success',
             cancel_url: 'http://localhost:5173/cancel',
         });
+
+        res.redirect(303, session.url);
     },
 
     async createCustomer(email, name, payment_method) {

@@ -6,7 +6,7 @@ const donationsRouter = new Router();
 
 donationsRouter.get('/', donationsController.getAllDonations);
 donationsRouter.get('/:donationId', donationsController.getDonationById);
-donationsRouter.post('/', stripeHandler.makeNewDonation);
+donationsRouter.post('/', stripeHandler.TryDonation);
 donationsRouter.put('/:donationId', donationsController.updateDonation);
 
 donationsRouter.get('/list?campaign_id=campaignId&filterBy=value', donationsController.GetDonationByCampaignId);

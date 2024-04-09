@@ -3,6 +3,19 @@ const {donationsController} = require('../controllers/donationsController');
 const {BadRequestError, NotFoundError} = require('../errors/errors');
 
 exports.stripeHandler = {
+    async TryDonation(req, res, next) {
+        const {userId, campaignId} = req.body;
+        try {
+            if (!userId || !campaignId) throw new BadRequestError('missing parameters in try donation');
+            const paymentSession = await stripeController.createPaymentSession();
+            if(!paymentSession) throw new NotFoundError('payment session not created');
+            console.log(paymentSession);
+            res.status(200).json(paymentSession);
+        } catch (error) {
+            next(error);
+        }
+    },
+
     async makeNewDonation(req, res, next) {
         try {
             const {userId, customerId, amount, campaignId, description, paymentMethodId} = req.body;
