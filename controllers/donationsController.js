@@ -46,10 +46,11 @@ exports.donationsController = {
     },
 
     async GetDonationByUserId(req, res, next) {
-        const {userId} = req.params;
+        const { userId } = req.params;
+        console.log(userId);
         try {
             const isId = mongoose.isValidObjectId(userId);
-            if (!isId) throw new BadRequestError('id in get donation by campaign id');
+            if (!isId) throw new BadRequestError('id in get donation by user id');
             const donations = await retrieveDonationByUserId(userId);
             if (!donations || donations.length === 0) throw new NotFoundError(`Donations from user id <${userId}>`);
             res.status(200).json(donations);
