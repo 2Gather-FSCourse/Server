@@ -15,6 +15,7 @@ const usersSchema = new Schema({
     img: { type: String },
     customerId: { type: String },
     phone: { type: String, required: true },
+    password: { type: String },
 }, { collection: 'users' });
 
 module.exports = model('user', usersSchema);
